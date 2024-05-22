@@ -6,5 +6,6 @@ const app = new Hono()
 
 app.use('*', logger())
 
+app.route("/api/expenses", expensesRoute)
 
 export default app
