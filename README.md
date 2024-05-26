@@ -1,15 +1,17 @@
-# okane-inai-backend
+# Okane Inai
 
-To install dependencies:
+## Overview
+Full-stack web application with a React frontend and a Hono.js backend, running on the Bun runtime. It uses a range of modern tools and libraries to ensure high performance and maintainability.
 
-```bash
-bun install
-```
+## Tech Stack
+### Frontend
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Tanstack](https://tanstack.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Shadcn UI](https://ui.shadcn.com/)
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.3. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+### Backend
+- [Hono.js](https://hono.dev/)
+- [Bun](https://bun.sh/)
