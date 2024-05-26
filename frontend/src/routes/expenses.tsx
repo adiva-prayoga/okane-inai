@@ -66,7 +66,7 @@ function Expenses() {
                 <TableRow key={expense.id}>
                   <TableCell className="font-medium">{expense.id}</TableCell>
                   <TableCell>{expense.title}</TableCell>
-                  <TableCell>${expense.amount}</TableCell>
+                  <TableCell>{expense.amount}</TableCell>
                 </TableRow>
               ))}
         </TableBody>
