@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -38,7 +39,7 @@ function Index() {
         <CardDescription>The total amount you've spent</CardDescription>
       </CardHeader>
       <CardContent className="text-3xl">
-        {isPending ? "..." : data.total}
+        {isPending ? <Skeleton className="h-6 animate-pulse" /> : data.total}
       </CardContent>
     </Card>
   );
