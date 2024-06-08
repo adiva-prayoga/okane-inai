@@ -4,7 +4,7 @@ import { zValidator } from "@hono/zod-validator";
 import { getUser } from "../kinde";
 
 import { db } from "../db";
-import { expenses as expensesTable } from "../db/schema/expenses";
+import { expenses as expensesTable, insertExpensesSchema } from "../db/schema/expenses";
 import { eq, desc, sum, and } from "drizzle-orm";
 
 import { createExpenseSchema } from "../sharedTypes";
@@ -26,10 +26,15 @@ export const expensesRoute = new Hono()
   const expense = c.req.valid("json")
   const user = c.var.user
 
-  const result = await db.insert(expensesTable).values({
+  const validatedExpense = insertExpensesSchema.parse({
     ...expense,
     userId: user.id
   })
+
+  const result = await db
+    .insert(expensesTable)
+    .values(validatedExpense)
+    .returning()
 
   c.status(201)
   return c.json(result)
