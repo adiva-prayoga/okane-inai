@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 
 import { useForm } from "@tanstack/react-form";
 import { api } from "@/lib/api";
@@ -21,6 +22,7 @@ function CreateExpense() {
     defaultValues: {
       title: "",
       amount: "0",
+      date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
       // Do something with form data
@@ -81,6 +83,30 @@ function CreateExpense() {
                 type="number"
                 onChange={(e) => field.handleChange(e.target.value)}
                 className="mb-2"
+              />
+              {field.state.meta.touchedErrors ? (
+                <em>{field.state.meta.touchedErrors}</em>
+              ) : null}
+            </div>
+          )}
+        />
+
+      <form.Field
+          name="date"
+          validators={{ 
+            onChange: createExpenseSchema.shape.date
+          }}
+          children={(field) => (
+            <div className="flex self-center">
+              <Calendar
+                mode="single"
+                selected={new Date(field.state.value)}
+                onSelect={(date: Date | undefined) => {
+                  if (date) {
+                    field.handleChange(date.toISOString());
+                  }
+                }}
+                className="rounded-md border"
               />
               {field.state.meta.touchedErrors ? (
                 <em>{field.state.meta.touchedErrors}</em>

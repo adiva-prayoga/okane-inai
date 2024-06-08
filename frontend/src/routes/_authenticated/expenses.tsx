@@ -43,6 +43,7 @@ function Expenses() {
             <TableHead className="w-[100px]">Id</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Amount</TableHead>
+            <TableHead>dates</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -60,6 +61,9 @@ function Expenses() {
                     <TableCell className="font-medium">
                       <Skeleton className="h-6 animate-pulse" />
                     </TableCell>
+                    <TableCell className="font-medium">
+                      <Skeleton className="h-6 animate-pulse" />
+                    </TableCell>
                   </TableRow>
                 ))
             : data?.expenses.map((expense) => (
@@ -67,6 +71,7 @@ function Expenses() {
                   <TableCell className="font-medium">{expense.id}</TableCell>
                   <TableCell>{expense.title}</TableCell>
                   <TableCell>{expense.amount}</TableCell>
+                  <TableCell>{expense.date}</TableCell>
                 </TableRow>
               ))}
         </TableBody>
