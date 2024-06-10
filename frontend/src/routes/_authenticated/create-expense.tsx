@@ -3,9 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { toast } from "sonner"
 
 import { useForm } from "@tanstack/react-form";
-import { api } from "@/lib/api";
+import { createExpense, getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from "@/lib/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { zodValidator } from '@tanstack/zod-form-adapter'
 
@@ -16,6 +18,7 @@ export const Route = createFileRoute("/_authenticated/create-expense")({
 });
 
 function CreateExpense() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const form = useForm({
     validatorAdapter: zodValidator,
@@ -25,12 +28,32 @@ function CreateExpense() {
       date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
-      // Do something with form data
-      const res = await api.expenses.$post({ json: value });
-      if (!res.ok) {
-        throw new Error("Failed to create expense");
-      }
+      const existisExpenses = await queryClient.ensureQueryData(getAllExpensesQueryOptions)
+
       navigate({ to: "/expenses" });
+
+      // loading state
+      queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {expense: value})
+
+      try {
+        const newExpense = await createExpense({ value });
+        // success state
+        queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+          ...existisExpenses,
+          expenses: [newExpense, ...existisExpenses.expenses]
+        })
+
+        toast("Expense Created", {
+          description: `Expense ${newExpense.title} created successfully`,
+        })
+      } catch (error) {
+        // error state
+        toast("Error", {
+          description: "Failed to create new expense",
+        })
+      } finally {
+        queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {})
+      }
     },
   });
 
@@ -101,11 +124,9 @@ function CreateExpense() {
               <Calendar
                 mode="single"
                 selected={new Date(field.state.value)}
-                onSelect={(date: Date | undefined) => {
-                  if (date) {
-                    field.handleChange(date.toISOString());
-                  }
-                }}
+                onSelect={(date) =>
+                  field.handleChange((date ?? new Date()).toISOString())
+                }
                 className="rounded-md border"
               />
               {field.state.meta.touchedErrors ? (

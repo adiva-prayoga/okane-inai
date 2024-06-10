@@ -28,8 +28,8 @@ function Profile() {
         </Avatar>
         <div className="flex flex-col ml-2">
           <div className="flex justify-start items-center">
-            <p className="text-[18px]">{data.user.family_name}</p>
-            <p className="text-[18px] lowercase">{data.user.given_name}</p>
+            <p className="text-[18px]">{data.user.given_name}</p>
+            <p className="text-[18px] lowercase">{data.user.family_name}</p>
           </div>
           <p className="text-[14px]">{data.user.email}</p>
         </div>
