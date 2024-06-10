@@ -1,26 +1,12 @@
 {
   "version": "7",
-  "dialect": "mysql",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
       "version": "7",
-      "when": 1717766678707,
-      "tag": "0000_normal_joshua_kane",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1717829815499,
-      "tag": "0001_third_joystick",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1717838527003,
-      "tag": "0002_clammy_norman_osborn",
+      "when": 1717850799174,
+      "tag": "0000_motionless_peter_quill",
       "breakpoints": true
     }
   ]
