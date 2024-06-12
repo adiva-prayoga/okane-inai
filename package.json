@@ -4,10 +4,14 @@
   "type": "module",
   "scripts": {
     "start": "bun server/index.ts",
-    "dev": "bun --watch server/index.ts"
+    "dev": "bun --watch server/index.ts",
+    "generate": "bun drizzle-kit generate",
+    "migrate": "bun drizzle-kit migrate",
+    "studio": "bun drizzle-kit studio"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.22.4"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -15,6 +19,8 @@
   "dependencies": {
     "@hono/zod-validator": "^0.2.1",
     "@kinde-oss/kinde-typescript-sdk": "^2.9.1",
+    "drizzle-orm": "^0.31.1",
+    "drizzle-zod": "^0.5.1",
     "hono": "^4.3.9",
     "zod": "^3.23.8"
   }

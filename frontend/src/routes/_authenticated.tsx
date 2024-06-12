@@ -1,11 +1,16 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router"
 import { userQueryOptions } from "@/lib/api"
 
+import { Button } from "@/components/ui/button"
+
 const Login = () => {
   return (
     <div>
-      You have to login
-      <a href="/api/login">Login</a>
+      <p className="mb-4">Cant access this page without logging in</p>
+
+      <Button variant="default" asChild>
+        <a href="/api/login">Login</a>
+      </Button>
     </div>
   )
 }

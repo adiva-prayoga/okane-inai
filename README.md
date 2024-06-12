@@ -15,3 +15,10 @@ Full-stack web application with a React frontend and a Hono.js backend, running 
 ### Backend
 - [Hono.js](https://hono.dev/)
 - [Bun](https://bun.sh/)
+
+### Authentication
+- [Kinde](https://www.kinde.com/)
+
+### Database
+- [Drizzle ORM](https://orm.drizzle.team/)
+- [PostgreSQL](https://www.postgresql.org/)
