@@ -19,7 +19,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        plusJakartaSans: ["Plus Jakarta Sans", "sans-serif"],
+        inter: ["inter", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

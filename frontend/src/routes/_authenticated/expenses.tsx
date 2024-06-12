@@ -7,7 +7,6 @@ import { Trash } from "lucide-react"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -27,12 +26,15 @@ function Expenses() {
   const { isPending, error, data } = useQuery(getAllExpensesQueryOptions);
   const { data: loadingCreateExpense } = useQuery(loadingCreateExpenseQueryOptions)
 
+  const formattedDate = (date: string) => {
+    return new Date(date).toLocaleDateString()
+  }
+
   if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="p-2 max-w-3xl m-auto">
       <Table>
-        <TableCaption>A list of your recent expenses.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Id</TableHead>
@@ -82,8 +84,8 @@ function Expenses() {
                 <TableRow key={expense.id}>
                   <TableCell className="font-medium">{expense.id}</TableCell>
                   <TableCell>{expense.title}</TableCell>
-                  <TableCell>{expense.amount}</TableCell>
-                  <TableCell>{expense.date}</TableCell>
+                  <TableCell>Rp {expense.amount}</TableCell>
+                  <TableCell>{formattedDate(expense.date)}</TableCell>
                   <TableCell>
                     <ExpenseDeleteButton id={expense.id} />
                   </TableCell>
