@@ -1,17 +1,25 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useForm } from "@tanstack/react-form";
+import { useQueryClient } from "@tanstack/react-query";
+import { zodValidator } from '@tanstack/zod-form-adapter'
+
+import { toast } from "sonner"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { toast } from "sonner"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { format } from "date-fns"
 
-import { useForm } from "@tanstack/react-form";
 import { createExpense, getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from "@/lib/api";
-import { useQueryClient } from "@tanstack/react-query";
-
-import { zodValidator } from '@tanstack/zod-form-adapter'
+import { cn } from "@/lib/utils";
 
 import { createExpenseSchema } from "@server/sharedTypes";
+import { CalendarIcon } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/create-expense")({
   component: CreateExpense,
@@ -114,21 +122,35 @@ function CreateExpense() {
           )}
         />
 
-      <form.Field
+        <form.Field
           name="date"
           validators={{ 
             onChange: createExpenseSchema.shape.date
           }}
           children={(field) => (
             <div className="flex self-center">
-              <Calendar
-                mode="single"
-                selected={new Date(field.state.value)}
-                onSelect={(date) =>
-                  field.handleChange((date ?? new Date()).toISOString())
-                }
-                className="rounded-md border"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[280px] justify-start text-left font-normal",
+                      !field.state.value && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {field.state.value ? format(new Date(field.state.value), "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={new Date(field.state.value)}
+                    onSelect={(date) => field.handleChange((date ?? new Date()).toISOString())}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               {field.state.meta.touchedErrors ? (
                 <em>{field.state.meta.touchedErrors}</em>
               ) : null}

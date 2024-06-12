@@ -1,7 +1,7 @@
 # Okane Inai
 
 ## Overview
-Full-stack web application with a React frontend and a Hono.js backend, running on the Bun runtime. It uses a range of modern tools and libraries to ensure high performance and maintainability.
+Okane Inai is a full-stack web application designed to track expenses. It features a React frontend and a Hono.js backend, running on the Bun runtime. The application leverages a range of modern tools and libraries to ensure high performance and maintainability.
 
 ## Tech Stack
 ### Frontend

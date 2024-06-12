@@ -8,6 +8,13 @@
       "when": 1717850799174,
       "tag": "0000_motionless_peter_quill",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1718171803640,
+      "tag": "0001_mighty_thunderbolt",
+      "breakpoints": true
     }
   ]
 }
