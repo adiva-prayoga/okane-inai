@@ -1,27 +1,41 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router"
-import { userQueryOptions } from "@/lib/api"
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button"
 
-const Login = () => {
-  return (
-    <div>
-      <p className="mb-4">Cant access this page without logging in</p>
+import { useQuery } from "@tanstack/react-query";
+import { userQueryOptions } from "@/lib/api";
+import Navbar from "@/components/Navbar";
 
-      <Button variant="default" asChild>
-        <a href="/api/login">Login</a>
-      </Button>
+const UnauthorizedPage = () => {
+  return (
+    <div className="h-screen flex items-center justify-center">
+      <div className="flex flex-col items-center shadow-lg rounded-md">
+        <div className="px-8 py-[50px]">
+          <h1 className="text-2xl mb-2 font-semibold">Unauthorized</h1>
+          <p className="mb-5 text-zinc-500">Please sign in to access this page</p>
+          <Button className="w-full" variant="default" asChild>
+            <a href="/api/login">Sign in</a>
+          </Button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-const Component = () => {
-  const { user } = Route.useRouteContext()
+const AuthenticatedComponent = () => {
+  const { data } = useQuery(userQueryOptions);
+  const { user } = Route.useRouteContext();
+
   if (!user) {
-    return <Login />
+    return <UnauthorizedPage />;
   }
 
-  return <Outlet />
+  return (
+    <>
+      <Navbar picture={data?.user.picture || "https://github.com/shadcn.png"} />
+      <Outlet />
+    </>
+  );
 }
 
 export const Route = createFileRoute('/_authenticated')({
@@ -35,5 +49,5 @@ export const Route = createFileRoute('/_authenticated')({
       return { user: null }
     }
   },
-  component: Component
+  component: AuthenticatedComponent
 })
