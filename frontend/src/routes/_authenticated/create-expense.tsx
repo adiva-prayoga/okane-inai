@@ -66,7 +66,7 @@ function CreateExpense() {
   });
 
   return (
-    <div>
+    <section>
       <form
         className="flex flex-col gap-y-4 max-w-xl m-auto"
         onSubmit={(e) => {
@@ -89,10 +89,11 @@ function CreateExpense() {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="Insert title"
                 className="mb-2"
               />
               {field.state.meta.touchedErrors ? (
-                <em>{field.state.meta.touchedErrors}</em>
+                <em className="text-red-500 text-sm">{field.state.meta.touchedErrors}</em>
               ) : null}
             </div>
           )}
@@ -113,10 +114,11 @@ function CreateExpense() {
                 onBlur={field.handleBlur}
                 type="number"
                 onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="Insert amount"
                 className="mb-2"
               />
               {field.state.meta.touchedErrors ? (
-                <em>{field.state.meta.touchedErrors}</em>
+                <em className="text-red-500 text-sm">{field.state.meta.touchedErrors}</em>
               ) : null}
             </div>
           )}
@@ -167,6 +169,6 @@ function CreateExpense() {
           )}
         />
       </form>
-    </div>
+    </section>
   );
 }
