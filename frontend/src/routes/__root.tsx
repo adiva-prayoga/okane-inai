@@ -14,7 +14,7 @@ export const Route = createRootRouteWithContext<MyRouteContext>()({
 function Root() {
   return (
     <>
-      <main className="container mx-auto font-inter text-[#040404]">
+      <main className="container mx-auto font-inter text-primary">
         <Outlet />
       </main>
       <Toaster />

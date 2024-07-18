@@ -11,19 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedExpensesImport } from './routes/_authenticated/expenses'
 import { Route as AuthenticatedCreateExpenseImport } from './routes/_authenticated/create-expense'
 
 // Create/Update Routes
-
-const AboutRoute = AboutImport.update({
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const AuthenticatedRoute = AuthenticatedImport.update({
   id: '/_authenticated',
@@ -32,11 +25,6 @@ const AuthenticatedRoute = AuthenticatedImport.update({
 
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   path: '/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
-const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
-  path: '/profile',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
@@ -63,13 +51,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
     '/_authenticated/create-expense': {
       id: '/_authenticated/create-expense'
       path: '/create-expense'
@@ -82,13 +63,6 @@ declare module '@tanstack/react-router' {
       path: '/expenses'
       fullPath: '/expenses'
       preLoaderRoute: typeof AuthenticatedExpensesImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/': {
@@ -107,10 +81,8 @@ export const routeTree = rootRoute.addChildren({
   AuthenticatedRoute: AuthenticatedRoute.addChildren({
     AuthenticatedCreateExpenseRoute,
     AuthenticatedExpensesRoute,
-    AuthenticatedProfileRoute,
     AuthenticatedIndexRoute,
   }),
-  AboutRoute,
 })
 
 /* prettier-ignore-end */
@@ -121,8 +93,7 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_authenticated",
-        "/about"
+        "/_authenticated"
       ]
     },
     "/_authenticated": {
@@ -130,12 +101,8 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_authenticated/create-expense",
         "/_authenticated/expenses",
-        "/_authenticated/profile",
         "/_authenticated/"
       ]
-    },
-    "/about": {
-      "filePath": "about.tsx"
     },
     "/_authenticated/create-expense": {
       "filePath": "_authenticated/create-expense.tsx",
@@ -143,10 +110,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_authenticated/expenses": {
       "filePath": "_authenticated/expenses.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/profile": {
-      "filePath": "_authenticated/profile.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/": {

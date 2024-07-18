@@ -39,9 +39,9 @@ function Expenses() {
           <TableRow>
             <TableHead className="w-[100px]">Id</TableHead>
             <TableHead>Title</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>dates</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Expense</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -52,7 +52,7 @@ function Expenses() {
             </TableCell>
             <TableCell>{loadingCreateExpense?.expense.title}</TableCell>
             <TableCell>{loadingCreateExpense?.expense.amount}</TableCell>
-            <TableCell>{loadingCreateExpense?.expense.date}</TableCell>
+            <TableCell>{formattedDate(loadingCreateExpense?.expense.date)}</TableCell>
             <TableCell className="font-medium">
               <Skeleton className="h-6 animate-pulse" />
             </TableCell>
