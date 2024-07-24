@@ -13,7 +13,7 @@ const AuthenticatedComponent = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar email={user.email} />
       <Outlet />
     </>
   );
