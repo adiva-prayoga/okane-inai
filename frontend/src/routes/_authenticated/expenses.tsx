@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions, deleteExpense } from "@/lib/api";
+import { useQuery } from "@tanstack/react-query";
+import { getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from "@/lib/api";
 
-import { Trash } from "lucide-react"
+import { formattedDate } from "@/lib/date";
 
+import DeleteExpenseButton from "@/components/DeleteExpenseButton";
 import {
   Table,
   TableBody,
@@ -12,11 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Button
-} from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/expenses")({
   component: Expenses,
@@ -26,14 +23,10 @@ function Expenses() {
   const { isPending, error, data } = useQuery(getAllExpensesQueryOptions);
   const { data: loadingCreateExpense } = useQuery(loadingCreateExpenseQueryOptions)
 
-  const formattedDate = (date: string) => {
-    return new Date(date).toLocaleDateString()
-  }
-
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="p-2 max-w-3xl m-auto">
+    <section className="p-2 max-w-3xl m-auto">
       <Table>
         <TableHeader>
           <TableRow>
@@ -87,46 +80,12 @@ function Expenses() {
                   <TableCell>Rp {expense.amount}</TableCell>
                   <TableCell>{formattedDate(expense.date)}</TableCell>
                   <TableCell>
-                    <ExpenseDeleteButton id={expense.id} />
+                    <DeleteExpenseButton id={expense.id} title={expense.title} />
                   </TableCell>
                 </TableRow>
               ))}
         </TableBody>
       </Table>
-    </div>
+    </section>
   );
-}
-
-function ExpenseDeleteButton({ id } : {id: number}) {
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: deleteExpense,
-    onError: () => {
-      toast("Error", {
-        description: `Failed to delete expense ${id}`,
-      })
-    },
-    onSuccess: () => {
-      toast("Expense Deleted", {
-        description: `Expense ${id} deleted successfully`,
-      })
-      queryClient.setQueryData(
-        getAllExpensesQueryOptions.queryKey,
-        (existisExpenses) => ({
-        ...existisExpenses,
-        expenses: existisExpenses!.expenses.filter((expense) => expense.id !== id),
-      }))
-    }
-  })
-
-  return (
-    <Button 
-      disabled={mutation.isPending}
-      onClick={() => mutation.mutate({id})}
-      variant="outline" 
-      size="icon"
-    >
-      {mutation.isPending ? "..." : <Trash className="h-4 w-4" />}
-    </Button>
-  )
 }

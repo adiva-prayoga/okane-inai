@@ -13,7 +13,7 @@ async function getTotalSpent() {
   return data;
 }
 
-const ExpensesTotal = () => {
+const TotalExpenses = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["get-total-spent"],
     queryFn: getTotalSpent,
@@ -27,8 +27,8 @@ const ExpensesTotal = () => {
   }
 
   return (
-    <div className="flex flex-col py-6">
-      <div className="text-sm text-gray-500">Net Total</div>
+    <div className="mt-6">
+      <div className="text-sm text-gray-500">Total Expenses</div>
       <div className="text-3xl font-semibold">
         {isPending ? (
           <Skeleton className="h-6 animate-pulse" />
@@ -43,5 +43,5 @@ const ExpensesTotal = () => {
   )
 }
 
-export default ExpensesTotal
+export default TotalExpenses
 

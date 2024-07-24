@@ -7,22 +7,16 @@ const client = hc<ApiRoutes>("/");
 
 export const api = client.api;
 
-async function getCurrentUser() {
+export async function fetchCurrentUser() {
   const res = await api.me.$get();
   if (!res.ok) {
-    throw new Error("Server error");
+    throw new Error("Failed to fetch current user");
   }
   const data = await res.json();
   return data;
 }
 
-export const userQueryOptions = queryOptions({
-  queryKey: ["get-current-user"],
-  queryFn: getCurrentUser,
-  staleTime: Infinity
-})
-
-export async function getAllExpenses() {
+export async function fetchAllExpenses() {
   const res = await api.expenses.$get();
   if (!res.ok) {
     throw new Error("Failed to fetch all expenses");
@@ -31,21 +25,26 @@ export async function getAllExpenses() {
   return data;
 }
 
-export const getAllExpensesQueryOptions = queryOptions({
-  queryKey: ["get-all-expenses"],
-  queryFn: getAllExpenses,
-  staleTime: 1000 * 60 * 5
-})
-
-export async function createExpense({ value } : { value: CreateExpense }) {
-  const res = await api.expenses.$post({ json: value });
+export async function createExpense({ value: expenseData }: { value: CreateExpense }) {
+  const res = await api.expenses.$post({ json: expenseData });
   if (!res.ok) {
     throw new Error("Failed to create expense");
   }
-
   const newExpense = await res.json();
   return newExpense;
 }
+
+export const userQueryOptions = queryOptions({
+  queryKey: ["get-current-user"],
+  queryFn: fetchCurrentUser,
+  staleTime: Infinity
+})
+
+export const getAllExpensesQueryOptions = queryOptions({
+  queryKey: ["get-all-expenses"],
+  queryFn: fetchAllExpenses,
+  staleTime: 1000 * 60 * 5
+})
 
 export const loadingCreateExpenseQueryOptions = queryOptions<{
   expense?: CreateExpense;
