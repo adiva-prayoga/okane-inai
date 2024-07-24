@@ -1,4 +1,5 @@
 import ExpensesTotal from "@/components/ExpensesTotal";
+import RecentExpenses from "@/components/RecentExpenses";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/")({
@@ -10,5 +11,6 @@ function Index() {
     <div className="flex items-center justify-center">
       <ExpensesTotal />
     </div>
+      <RecentExpenses />
   );
 }
