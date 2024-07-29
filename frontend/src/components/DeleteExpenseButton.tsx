@@ -43,10 +43,10 @@ const DeleteExpenseButton = ({ id, title }: { id: number; title: string }) => {
           <Button 
           disabled={deleteExpenseMutation.isPending}
           onClick={() => deleteExpenseMutation.mutate({ id })}
-          variant="destructive" 
+          variant="outline" 
           size="icon"
           >
-            <Trash className="h-4 w-4" strokeWidth={3} />
+            <Trash className="h-4 w-4" strokeWidth={2} />
           </Button>
         )
       }

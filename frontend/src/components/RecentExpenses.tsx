@@ -22,14 +22,14 @@ const RecentExpenses = () => {
       </div>
       <ul className="mt-6">
         {isLoading 
-          ? Array(3).fill(0).map((_, index) => (
+          ? Array(5).fill(0).map((_, index) => (
             <li key={index} className="p-4 rounded-lg">
               <div><Skeleton className="h-6 animate-pulse" /></div>
               <div><Skeleton className="h-6 animate-pulse" /></div>
               <div><Skeleton className="h-6 animate-pulse" /></div>
             </li>
           ))
-          : data?.expenses.map((expense) => (
+          : data?.expenses.slice(0, 5).map((expense) => (
             <li key={expense.id} className="flex justify-between items-center border p-4 rounded-lg mb-4">
               <div className="flex flex-col gap-1">
                 <h3 className="text-md font-semibold">{expense.title}</h3>
