@@ -3,7 +3,7 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 
-import { formattedDate } from "@/lib/date";
+import { formattedDate, formattedDateWithTime } from "@/lib/date";
 
 import DeleteExpenseButton from "@/components/DeleteExpenseButton";
 
@@ -75,6 +75,11 @@ export const columns: ColumnDef<Expenses>[] = [
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => <div className="lowercase">{formattedDate(row.getValue("date"))}</div>,
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created At",
+    cell: ({ row }) => <div className="lowercase">{formattedDateWithTime(row.getValue("createdAt"))}</div>,
   },
   {
     id: "actions",
