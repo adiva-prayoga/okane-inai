@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/popover"
 import { format } from "date-fns"
 
-import { createExpense, getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from "@/lib/api";
+import { createExpense, getAllExpensesQueryOptions } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 import { createExpenseSchema } from "@server/sharedTypes";
@@ -40,9 +40,6 @@ function CreateExpense() {
 
       navigate({ to: "/expenses" });
 
-      // loading state
-      queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {expense: value})
-
       try {
         const newExpense = await createExpense({ value });
         // success state
@@ -59,8 +56,6 @@ function CreateExpense() {
         toast("Error", {
           description: "Failed to create new expense",
         })
-      } finally {
-        queryClient.setQueryData(loadingCreateExpenseQueryOptions.queryKey, {})
       }
     },
   });

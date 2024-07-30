@@ -4,9 +4,13 @@ import { getAllExpensesQueryOptions, deleteExpense } from "@/lib/api";
 import { Trash } from "lucide-react"
 
 import { ReloadIcon } from "@radix-ui/react-icons"
+
 import {
-  Button
-} from "@/components/ui/button";
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
 import { toast } from "sonner";
 
 const DeleteExpenseButton = ({ id, title }: { id: number; title: string }) => {
@@ -36,18 +40,21 @@ const DeleteExpenseButton = ({ id, title }: { id: number; title: string }) => {
     <>
       {
         deleteExpenseMutation.isPending ? (
-          <Button variant="outline" disabled>
-            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-          </Button>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> Loading
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         ) : (
-          <Button 
-          disabled={deleteExpenseMutation.isPending}
-          onClick={() => deleteExpenseMutation.mutate({ id })}
-          variant="outline" 
-          size="icon"
-          >
-            <Trash className="h-4 w-4" strokeWidth={2} />
-          </Button>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer" onClick={() => deleteExpenseMutation.mutate({ id })}>
+              <Trash className="mr-2 h-4 w-4" /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         )
       }
     </>

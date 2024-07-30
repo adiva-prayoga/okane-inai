@@ -46,16 +46,6 @@ export const getAllExpensesQueryOptions = queryOptions({
   staleTime: 1000 * 60 * 5
 })
 
-export const loadingCreateExpenseQueryOptions = queryOptions<{
-  expense?: CreateExpense;
-}>({
-  queryKey: ["loading-create-expense"],
-  queryFn: async () => {
-    return {}
-  },
-  staleTime: Infinity
-})
-
 export async function deleteExpense({ id }: {id: number}) {
   const res = await api.expenses[":id{[0-9]+}"].$delete({param: { id: id.toString() } });
 

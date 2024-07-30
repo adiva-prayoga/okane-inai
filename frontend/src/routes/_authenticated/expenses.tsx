@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getAllExpensesQueryOptions, loadingCreateExpenseQueryOptions } from "@/lib/api";
+import { getAllExpensesQueryOptions } from "@/lib/api";
 
 import PaginationControl from "@/components/PaginationControl";
-import TableExpenses from "@/components/TableExpenses";
+import DataTableExpenses from "@/components/DataTableExpenses";
 
 export const Route = createFileRoute("/_authenticated/expenses")({
   component: Expenses,
@@ -13,7 +13,6 @@ export const Route = createFileRoute("/_authenticated/expenses")({
 
 function Expenses() {
   const { isPending, error, data } = useQuery(getAllExpensesQueryOptions);
-  const { data: loadingCreateExpense } = useQuery(loadingCreateExpenseQueryOptions)
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -43,9 +42,8 @@ function Expenses() {
 
   return (
     <section className="p-2 max-w-3xl m-auto">
-      <TableExpenses 
-        currentExpenses={currentExpenses} 
-        loadingCreateExpense={loadingCreateExpense} 
+      <DataTableExpenses 
+        data={currentExpenses}
         isPending={isPending}
       />
       <PaginationControl
