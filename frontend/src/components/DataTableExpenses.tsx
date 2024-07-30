@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { columns } from "@/components/Colums"
+import { columns } from "@/components/Columns"
 
 import {
   ColumnFiltersState,
