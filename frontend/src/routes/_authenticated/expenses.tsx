@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllExpensesQueryOptions } from "@/lib/api";
 
 import PaginationControl from "@/components/PaginationControl";
-import TableExpenses from "@/components/TableExpenses";
+import DataTableExpenses from "@/components/DataTableExpenses";
 
 export const Route = createFileRoute("/_authenticated/expenses")({
   component: Expenses,
@@ -42,8 +42,8 @@ function Expenses() {
 
   return (
     <section className="p-2 max-w-3xl m-auto">
-      <TableExpenses 
-        currentExpenses={currentExpenses} 
+      <DataTableExpenses 
+        data={currentExpenses}
         isPending={isPending}
       />
       <PaginationControl
