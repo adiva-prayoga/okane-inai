@@ -36,7 +36,7 @@ const PaginationControl = ({ totalPages, currentPage, onPageChange, onPrevious, 
   };
 
   return (
-    <Pagination>
+    <Pagination className="mt-6">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious href="#" onClick={(event) => { event.preventDefault(); onPrevious(); }} />
