@@ -27,16 +27,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-export type Expenses = {
-  id: number;
-  amount: string;
-  title: string;
-  date: string;
-  userId: string;
-  createdAt: string | null;
-}
+import { ExpenseTypes } from "@/types"
 
-const DataTableExpenses = ({ data, isPending }: { data: Expenses[], isPending: boolean }) => {
+const DataTableExpenses = ({ data, isPending }: { data: ExpenseTypes[], isPending: boolean }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

@@ -17,16 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export type Expenses = {
-  id: number;
-  amount: string;
-  title: string;
-  date: string;
-  userId: string;
-  createdAt: string | null;
-}
+import { ExpenseTypes } from "@/types"
 
-export const columns: ColumnDef<Expenses>[] = [
+export const columns: ColumnDef<ExpenseTypes>[] = [
   {
     id: "select",
     header: ({ table }) => (

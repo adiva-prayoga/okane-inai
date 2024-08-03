@@ -5,7 +5,6 @@ import { zodValidator } from '@tanstack/zod-form-adapter'
 
 import { toast } from "sonner"
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -17,6 +16,7 @@ import { format } from "date-fns"
 
 import { createExpense, getAllExpensesQueryOptions } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import { formattedCurrentDate } from "@/lib/date";
 
 import { createExpenseSchema } from "@server/sharedTypes";
 import { CalendarIcon } from "lucide-react";
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/_authenticated/create-expense")({
 });
 
 function CreateExpense() {
+  const currentDate = new Date().toISOString();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const form = useForm({
@@ -63,7 +64,7 @@ function CreateExpense() {
   return (
     <section>
       <form
-        className="flex flex-col gap-y-4 max-w-xl m-auto"
+        className="flex flex-col gap-y-6 max-w-xl m-auto"
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -71,50 +72,27 @@ function CreateExpense() {
         }}
       >
         <form.Field
-          name="title"
-          validators={{ 
-            onChange: createExpenseSchema.shape.title
-          }}
-          children={(field) => (
-            <div>
-              <Label htmlFor={field.name}>Title</Label>
-              <Input
-                id={field.name}
-                name={field.name}
-                value={field.state.value}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-                placeholder="Insert title"
-                className="mb-2"
-              />
-              {field.state.meta.touchedErrors ? (
-                <em className="text-red-500 text-sm">{field.state.meta.touchedErrors}</em>
-              ) : null}
-            </div>
-          )}
-        />
-
-        <form.Field
           name="amount"
           validators={{ 
             onChange: createExpenseSchema.shape.amount
           }}
           children={(field) => (
+            
             <div>
-              <Label htmlFor={field.name}>Amount</Label>
+              <div className="text-center text-[#9CA3AF] my-4">
+                {formattedCurrentDate(new Date(currentDate).toISOString())}
+              </div>
               <Input
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                type="number"
                 onChange={(e) => field.handleChange(e.target.value)}
-                placeholder="Insert amount"
-                className="mb-2"
+                type="number"
+                placeholder="0"
+                required
+                className="w-full rounded-md text-5xl font-bold py-4 mt-6 mb-4 outline-none border-none text-center border-b-2 focus-visible:ring-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
-              {field.state.meta.touchedErrors ? (
-                <em className="text-red-500 text-sm">{field.state.meta.touchedErrors}</em>
-              ) : null}
             </div>
           )}
         />
@@ -155,10 +133,33 @@ function CreateExpense() {
           )}
         />
 
+        <form.Field
+          name="title"
+          validators={{ 
+            onChange: createExpenseSchema.shape.title
+          }}
+          children={(field) => (
+            <div>
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="Description"
+                className="px-4 py-3 focus-visible:ring-transparent"
+              />
+              {field.state.meta.touchedErrors ? (
+                <em className="text-red-500 text-sm">{field.state.meta.touchedErrors}</em>
+              ) : null}
+            </div>
+          )}
+        />
+
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <Button className="mt-6" disabled={!canSubmit}>
+            <Button disabled={!canSubmit}>
               {isSubmitting ? "..." : "Create Expense"}
             </Button>
           )}
