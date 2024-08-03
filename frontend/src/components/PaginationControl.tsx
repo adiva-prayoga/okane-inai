@@ -7,15 +7,9 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 
-interface PaginationControlProps {
-  totalPages: number
-  currentPage: number
-  onPageChange: (page: number) => void
-  onPrevious: () => void
-  onNext: () => void
-}
+import { PaginationControlTypes } from "@/types"
 
-const PaginationControl = ({ totalPages, currentPage, onPageChange, onPrevious, onNext }: PaginationControlProps) => {
+const PaginationControl = ({ totalPages, currentPage, onPageChange, onPrevious, onNext }: PaginationControlTypes) => {
   const renderPageNumbers = () => {
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 

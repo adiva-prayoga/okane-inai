@@ -33,8 +33,8 @@ const TotalExpenses = () => {
         {isPending ? (
           <Skeleton className="h-6 animate-pulse" />
         ) : (
-          <span className="relative">
-            {formattedTotalSpent},00
+          <span className="relative text-5xl font-semibold">
+            {formattedTotalSpent}
             <span className="text-sm font-normal text-gray-500 absolute right-[-22px] top-[-5px]">Rp</span>
           </span>
         )}
